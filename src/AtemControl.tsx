@@ -57,6 +57,7 @@ export const ATEMControl = () => {
   const setProgram = async (index: number) => {
     await fetch("/api/playout/atem/program", {
       method: "post",
+      headers: { "content-type": "application/json" },
       body: JSON.stringify({ inputIndex: index }),
     });
     setIndex(index);
