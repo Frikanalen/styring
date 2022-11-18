@@ -51,7 +51,10 @@ export const ATEMControl = () => {
   useEffect(() => {
     fetch("/api/playout/atem/program")
       .then((res) => res.json())
-      .then((data) => setIndex(data.InputIndex));
+      .then((data) => {
+        console.log(data);
+        setIndex(data.InputIndex);
+      });
   }, []);
 
   const setProgram = async (index: number) => {
