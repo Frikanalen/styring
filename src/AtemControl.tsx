@@ -82,14 +82,14 @@ export const ATEMControl = () => {
   };
 
   return (
-    <div className={"flex lg:mx-auto flex-col lg:flex-row lg:gap-4"}>
+    <div className={"flex lg:mx-auto flex-col lg:gap-4"}>
       <div className={"bg-red-300 p-2 lg:p-4"}>
         Program
         <ATEMButtons
           inputs={ATEM_INPUTS}
           activeIndex={programInput}
           onChange={setProgram}
-        />{" "}
+        />
       </div>
 
       <div className={"bg-green-300 p-2 lg:p-4"}>

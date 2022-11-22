@@ -35,12 +35,6 @@ export const MonitoringStream = () => {
   };
 
   return (
-    <div className={"aspect-video border-2 border-white"}>
-      <div
-        className={"w-full h-full"}
-        ref={containerRef}
-        onClick={toggleMute}
-      />
-    </div>
+    <div className={"aspect-video"} ref={containerRef} onClick={toggleMute} />
   );
 };
