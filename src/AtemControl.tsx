@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
-const API_BASE = "http://localhost:8089";
+const API_BASE = import.meta.env.DEV
+  ? "http://localhost:8089"
+  : "/api/playout/atem";
 /// /api/playout/atem
 export const ATEM_INPUTS: MixEffectsBusInput[] = [
   { index: 2, name: "TX1" },
