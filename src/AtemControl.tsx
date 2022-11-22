@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const API_BASE = "http://localhost:8089";
+/// /api/playout/atem
 export const ATEM_INPUTS: MixEffectsBusInput[] = [
   { index: 2, name: "TX1" },
   { index: 3, name: "TX2" },
@@ -20,9 +22,10 @@ export type ATEMControlsProps = {
 export function ATEMButtons(props: ATEMControlsProps) {
   const { inputs, activeIndex, onChange } = props;
 
-  const containerStyle = "flex gap-4";
+  const containerStyle = "flex gap-1 lg:gap-4";
 
-  const baseStyle = "block border-2 border-black p-2 font-mono w-20 font-bold";
+  const baseStyle =
+    "block border-2 border-black lg:p-2 font-mono w-14 lg:w-20 font-bold";
   const activeStyle = "bg-[#ee6666]";
   const inactiveStyle = "bg-[#666666]";
   const buttonStyle = (buttonIndex: number) =>
@@ -46,31 +49,57 @@ export function ATEMButtons(props: ATEMControlsProps) {
 }
 
 export const ATEMControl = () => {
-  const [index, setIndex] = useState<number>(-1);
+  const [programInput, setProgramInput] = useState<number>(-1);
+  const [previewInput, setPreviewInput] = useState<number>(-1);
 
   useEffect(() => {
-    fetch("/api/playout/atem/program")
+    fetch(API_BASE + "/program")
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setIndex(data.InputIndex);
-      });
+      .then(({ inputIndex }) => setProgramInput(inputIndex));
+    fetch(API_BASE + "/preview")
+      .then((res) => res.json())
+      .then(({ inputIndex }) => setPreviewInput(inputIndex));
   }, []);
 
   const setProgram = async (index: number) => {
-    await fetch("/api/playout/atem/program", {
+    await fetch(API_BASE + "/program", {
       method: "post",
+      credentials: "include",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ inputIndex: index }),
     });
-    setIndex(index);
+    setProgramInput(index);
+  };
+
+  const setPreview = async (index: number) => {
+    await fetch(API_BASE + "/preview", {
+      method: "post",
+      credentials: "include",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ inputIndex: index }),
+    });
+    setPreviewInput(index);
   };
 
   return (
-    <ATEMButtons
-      inputs={ATEM_INPUTS}
-      activeIndex={index}
-      onChange={setProgram}
-    />
+    <div className={"flex lg:mx-auto flex-col lg:flex-row lg:gap-4"}>
+      <div className={"bg-red-300 p-2 lg:p-4"}>
+        Program
+        <ATEMButtons
+          inputs={ATEM_INPUTS}
+          activeIndex={programInput}
+          onChange={setProgram}
+        />{" "}
+      </div>
+
+      <div className={"bg-green-300 p-2 lg:p-4"}>
+        Preview
+        <ATEMButtons
+          inputs={ATEM_INPUTS}
+          activeIndex={previewInput}
+          onChange={setPreview}
+        />
+      </div>
+    </div>
   );
 };

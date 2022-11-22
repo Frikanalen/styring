@@ -7,10 +7,10 @@ Broadcast automation control frontend
 ### Short term
 (This includes items more pertaining to other backends)
 
+* Distinct favicon for playout control
 * Documentation (including here)
 * Stream events API for ATEM status
 * POST API for ATEM:
-  * Preview input set
   * AUX control
 * Refactor still image generation
   * Render to PNGs in this code base using canvas tag
