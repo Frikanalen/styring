@@ -29,7 +29,7 @@ export const usePlayoutWebsocket = () => {
 
   const loading = readyState === ReadyState.CONNECTING;
   const error =
-    readyState === ReadyState.CLOSED ? "Connection closed" : schemaError;
+    readyState === ReadyState.CLOSED ? "Tilkobling lukket" : schemaError;
 
   return { lastUpdate, connectionStatus, error, loading };
 };
