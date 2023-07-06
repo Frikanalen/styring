@@ -17,7 +17,7 @@ export type MixEffectsBusInput = { index: number; name: string };
 
 export type ATEMControlsProps = {
   inputs: MixEffectsBusInput[];
-  activeIndex: number;
+  activeIndex: number | undefined;
   onChange: (index: number) => void;
 };
 
@@ -29,10 +29,10 @@ export function ATEMButtons(props: ATEMControlsProps) {
   const baseStyle =
     "block border-2 border-black lg:p-2 font-mono w-14 lg:w-20 font-bold";
   const activeStyle = "bg-[#ee6666]";
-  const inactiveStyle = "bg-[#666666]";
+  const inactiveStyle = "text-gray-600 bg-gray-300";
   const buttonStyle = (buttonIndex: number) =>
     [baseStyle, buttonIndex === activeIndex ? activeStyle : inactiveStyle].join(
-      " "
+      " ",
     );
 
   return (
