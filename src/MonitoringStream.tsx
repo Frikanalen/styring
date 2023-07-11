@@ -7,6 +7,9 @@ export const MonitoringStream = () => {
   >(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  if (!import.meta.env.VITE_STREAM_URL?.length)
+    return <div>Error: VITE_STREAM_URL not set</div>;
+
   useEffect(() => {
     if (containerRef.current == null) return;
 
@@ -14,7 +17,7 @@ export const MonitoringStream = () => {
       setVideoElement(
         new JSMpeg.VideoElement(
           containerRef.current,
-          "wss://monitoring.frikanalen.no/",
+          import.meta.env.VITE_STREAM_URL || "",
           {
             videoBufferSize: 512 * 1024 * 20,
             audioBufferSize: 128 * 1024 * 20,

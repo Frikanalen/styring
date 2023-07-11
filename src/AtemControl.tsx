@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
+import cx from "classnames";
 
-const API_BASE = import.meta.env.DEV
-  ? "http://localhost:8089"
-  : "/api/playout/atem";
-/// /api/playout/atem
+const API_BASE = import.meta.env.VITE_ATEM_URL;
+
 export const ATEM_INPUTS: MixEffectsBusInput[] = [
   { index: 2, name: "TX1" },
   { index: 3, name: "TX2" },
@@ -21,34 +20,29 @@ export type ATEMControlsProps = {
   onChange: (index: number) => void;
 };
 
-export function ATEMButtons(props: ATEMControlsProps) {
-  const { inputs, activeIndex, onChange } = props;
-
-  const containerStyle = "flex gap-1 lg:gap-4";
-
-  const baseStyle =
-    "block border-2 border-black lg:p-2 font-mono w-14 lg:w-20 font-bold";
-  const activeStyle = "bg-[#ee6666]";
-  const inactiveStyle = "text-gray-600 bg-gray-300";
-  const buttonStyle = (buttonIndex: number) =>
-    [baseStyle, buttonIndex === activeIndex ? activeStyle : inactiveStyle].join(
-      " ",
-    );
-
-  return (
-    <div className={containerStyle}>
-      {inputs.map((input) => (
-        <button
-          className={buttonStyle(input.index)}
-          key={input.index}
-          onClick={() => onChange(input.index)}
-        >
-          {input.name}
-        </button>
-      ))}
-    </div>
-  );
-}
+export const ATEMButtons = ({
+  inputs,
+  activeIndex,
+  onChange,
+}: ATEMControlsProps) => (
+  <div className={"flex gap-1 lg:gap-4"}>
+    {inputs.map(({ index, name }) => (
+      <button
+        className={cx(
+          "block border-2 border-black lg:p-2 font-mono w-14 lg:w-20 font-bold",
+          {
+            "bg-[#ee6666]": index === activeIndex,
+            "text-gray-600 bg-gray-300": index !== activeIndex,
+          }
+        )}
+        key={index}
+        onClick={() => onChange(index)}
+      >
+        {name}
+      </button>
+    ))}
+  </div>
+);
 
 export const ATEMControl = () => {
   const [programInput, setProgramInput] = useState<number>(-1);
@@ -57,10 +51,10 @@ export const ATEMControl = () => {
   useEffect(() => {
     fetch(API_BASE + "/program")
       .then((res) => res.json())
-      .then(({ inputIndex }) => setProgramInput(inputIndex));
+      .then(({ programInput }) => setProgramInput(programInput));
     fetch(API_BASE + "/preview")
       .then((res) => res.json())
-      .then(({ inputIndex }) => setPreviewInput(inputIndex));
+      .then(({ previewInput }) => setPreviewInput(previewInput));
   }, []);
 
   const setProgram = async (index: number) => {
@@ -82,6 +76,7 @@ export const ATEMControl = () => {
     });
     setPreviewInput(index);
   };
+  console.log({ programInput, previewInput });
 
   return (
     <div className={"flex lg:mx-auto flex-col lg:gap-4"}>
