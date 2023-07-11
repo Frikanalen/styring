@@ -1,10 +1,9 @@
 import "./App.css";
 import { MonitoringStream } from "./MonitoringStream";
-import { ATEM_INPUTS, ATEMButtons, ATEMControl } from "./AtemControl";
+import { ATEMButtons, ATEMControl } from "./AtemControl";
 import { TextSlideEditorDialog } from "./TextSlideEditor";
 import { useEffect, useState } from "react";
 import { Playout } from "./Playout.js";
-import { set } from "date-fns";
 
 const API_BASE = import.meta.env.VITE_ATEM_URL;
 const useAtemAux = (auxIndex: number) => {
@@ -32,7 +31,7 @@ const useAtemAux = (auxIndex: number) => {
 function App() {
   const [isOpen, setOpen] = useState<boolean>(false);
 
-  const { input: aux1Input, setInput: setAux1Input } = useAtemAux(1);
+  const { input: aux1Input, setInput: setAux1Input } = useAtemAux(2);
 
   return (
     <div className={"bg-gray-200 lg:p-8 flex-col flex lg:gap-4 lg:flex-row"}>
