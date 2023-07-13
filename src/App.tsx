@@ -37,7 +37,7 @@ const MonitoringStreamControl = ({
   muted: boolean;
   setMuted: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { input: aux1Input, setInput: setAux1Input } = useAtemAux(1);
+  const { input, setInput } = useAtemAux(2);
   return (
     <div
       className={"bg-gray-300 p-2 lg:p-4 flex items-center gap-4 select-none"}
@@ -68,11 +68,11 @@ const MonitoringStreamControl = ({
           },
           {
             name: "Multi",
-            index: 8,
+            index: 10,
           },
         ]}
-        activeIndex={aux1Input}
-        onChange={async (idx) => await setAux1Input(idx)}
+        activeIndex={input}
+        onChange={async (idx) => await setInput(idx)}
       />
     </div>
   );

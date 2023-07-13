@@ -4,8 +4,8 @@ import cx from "classnames";
 const API_BASE = import.meta.env.VITE_ATEM_URL;
 
 export const ATEM_INPUTS: MixEffectsBusInput[] = [
-  { index: 2, name: "TX1" },
-  { index: 1, name: "TX2" },
+  { index: 1, name: "TX1" },
+  { index: 2, name: "TX2" },
   { index: 3, name: "TX3" },
   { index: 5, name: "RX1" },
   { index: 3010, name: "Still 1" },
